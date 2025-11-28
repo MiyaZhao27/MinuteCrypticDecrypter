@@ -1,9 +1,21 @@
 from indicatorcracker import predict_category_from_length
 from hidden import ngrams_of, filter_real_words
+from anagram import anagrams_of, filter_real_words
 
 
 def run_anagram_algorithm(clue, indicator, fodder, length):
-    return "I'm running the ANAGRAMS algorithm"
+    all_anagrams = anagrams_of(fodder)
+    real_words = filter_real_words(all_anagrams)
+
+    def filter_by_length(words, length):
+        return {w for w in words if len(w) == length}
+    real_words = filter_by_length(real_words, length)
+
+    if len(real_words) == 0:
+        return f"No anagram English words of length {length} found."
+    
+    return f"Anagram English words of length {length}: {real_words}"
+
 
 
 def run_reversal_algorithm(clue, indicator, fodder, length):
