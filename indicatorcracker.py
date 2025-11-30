@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
+from word2vec import get_model
 
 # import data
 df = pd.read_csv("logistic_data.csv")
@@ -15,6 +16,33 @@ df = pd.read_csv("logistic_data.csv")
 
 
 # FEATURES HERE!!!!
+
+## ====== WORD2VEC INDICATOR FEATURES ==========================
+
+model = get_model()
+
+# baseline: can add those lists of words later too
+
+ANAGRAM_WORDS = ["erupt", "shake", "mix", "confuse", "stir"]
+REVERSAL_WORDS = ["back", "reverse", "turned", "over", "around"]
+HIDDEN_WORDS = ["inside", "within", "amid", "concealed"]
+SELECTOR_WORDS = ["take", "odd", "even", "end", "middle", "first", "second", "third", "fourth"]
+
+def avg_similarity(word, word_list):
+    sims = []
+    for w in word_list:
+        if word in model and w in model:
+            sims.append(model.similarity(word, w))
+    if sims:
+        return np.mean(sims) 
+    else:
+        return 0
+
+df["sim_anagram"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), ANAGRAM_WORDS))
+df["sim_reversal"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), REVERSAL_WORDS))
+df["sim_hidden"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), HIDDEN_WORDS))
+df["sim_selector"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), SELECTOR_WORDS))
+
 
 # Fodder Length
 ## NEW
@@ -28,8 +56,15 @@ df["fodder_length"] = (df["fodder"]
 )
 
 
-# Length of Clue and Fodder
-X = df[["length", "fodder_length"]].values.astype(float)
+# Update all features here!
+X = df[[
+    "length",
+    "fodder_length",
+    "sim_anagram",
+    "sim_reversal",
+    "sim_hidden",
+    "sim_selector"
+]].values.astype(float)
 
 # label categories
 y_raw = df["category"].values
