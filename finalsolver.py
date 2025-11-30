@@ -65,7 +65,7 @@ def solve_clue():
         print(run_hidden_algorithm(clue, indicator, fodder, length))
 
     elif "selector" in category_lower:
-        print(run_hidden_algorithm(clue, indicator, fodder, length))
+        print(run_selector_algorithm(clue, indicator, fodder, length))
 
     else:
         print("Unknown category — sorry.")
