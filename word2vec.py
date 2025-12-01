@@ -1,14 +1,8 @@
-from gensim.models import KeyedVectors
-
-MODEL_PATH = "glove.6B.50d.txt"
+import gensim.downloader as api
 
 
 def get_model():
-    print("Loading GloVe embeddings (50d)...")
-    model = KeyedVectors.load_word2vec_format(
-        MODEL_PATH,
-        binary=False,
-        no_header=True
-    )
+    print("Loading GloVe 50d embeddings from Gensim API…")
+    model = api.load("glove-wiki-gigaword-50")
     print("Done!")
     return model
