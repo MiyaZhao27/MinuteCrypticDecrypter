@@ -62,9 +62,12 @@ def best_definition_match(definition, candidates):
     return best, scores
 
 
-ANAGRAM_WORDS = ["mix", "destroy", "strange", "tampering", "exploded", "shake"]
-HIDDEN_WORDS = ["conceals", "hides", "within", "held", "absorbed", "taken"]
-SELECTOR_WORDS = ["odd", "even", "head", "tail", "borders", "alternate"]
+ANAGRAM_WORDS = ["mix", "throwing", "destroy", "strange",
+                 "dancing", "sort", "tampering", "exploded"]
+HIDDEN_WORDS = ["hides", "displays", "reveals", "within", "held",
+                "capturing", "absorbed", "sample", "selection", "bit", "taken"]
+SELECTOR_WORDS = ["head", "tail", "heart", "borders", "coat",
+                  "contents", "guts", "odd", "even", "alternate", "regularly"]
 
 
 df = pd.read_csv("logistic_data.csv")

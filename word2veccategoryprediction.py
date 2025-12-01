@@ -24,20 +24,13 @@ def get_vec(word):
 # Category indicator lists
 
 
-ANAGRAM_WORDS = [
-    "mix", "throwing", "destroy", "strange", "dancing", "sort",
-    "tampering", "exploded"
-]
+ANAGRAM_WORDS = ["mix", "throwing", "destroy", "strange",
+                 "dancing", "sort", "tampering", "exploded"]
+HIDDEN_WORDS = ["hides", "displays", "reveals", "within", "held",
+                "capturing", "absorbed", "sample", "selection", "bit", "taken"]
+SELECTOR_WORDS = ["head", "tail", "heart", "borders", "coat",
+                  "contents", "guts", "odd", "even", "alternate", "regularly"]
 
-SELECTOR_WORDS = [
-    "head", "tail", "heart", "borders", "coat", "contents",
-    "guts", "odd", "even", "alternate", "regularly"
-]
-
-HIDDEN_WORDS = [
-    "conceals", "hides", "displays", "reveals", "within", "held",
-    "capturing", "absorbed", "sample", "selection", "bit", "taken"
-]
 
 CATEGORY_MAP = {
     "anagram": ANAGRAM_WORDS,
