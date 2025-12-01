@@ -24,8 +24,8 @@ def last_letters(words):
 def middle_letters(words):
     return "".join(w[len(w)//2] for w in words if len(w) >= 3)
 
-
 # nth letter selectors
+
 
 def nth_letters(chars, n):
     return "".join(chars[0::n])
@@ -48,8 +48,8 @@ def first_half(w):
 def second_half(w):
     return w[len(w)//2:]
 
-
 # substrings
+
 
 def word_substrings(w):
     subs = []
@@ -90,7 +90,6 @@ def cross_half_combinations(words):
             ])
 
     return halves
-
 
 # combine them all!
 
@@ -133,18 +132,14 @@ def generate_all_selectors(fodder, length=None):
     # cross-half combinations
     candidates.extend(cross_half_combinations(words))
 
-    # substring selectors for each word
     for w in words:
         candidates.extend(word_substrings(w))
-
-    # substring selectors for entire string
     candidates.extend(string_substrings(combined))
 
     # accomodate for the reverse case
     rev_candidates = [c[::-1] for c in candidates]
     candidates.extend(rev_candidates)
 
-# remove dups
     candidates = [c for c in candidates if c]
 
     if length is not None:
