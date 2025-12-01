@@ -1,83 +1,42 @@
-import sys
 import numpy as np
 import pandas as pd
-
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
 
-# import data
+from anagram import anagrams_of, filter_real_words as anagram_filter
+from hidden import ngrams_of, filter_real_words as hidden_filter
+from selector import generate_all_selectors, filter_real_words as selector_filter
+
 df = pd.read_csv("logistic_data.csv")
 
-
-# WORD2VEC STUFF
-
-# from word2vec import get_model
-# model = get_model()
-
-# ANAGRAM_WORDS = ["erupt", "shake", "mix", "confuse", "stir"]
-# HIDDEN_WORDS = ["inside", "within", "amid", "concealed"]
-# SELECTOR_WORDS = ["take", "odd", "even", "end", "middle", "first", "second", "third", "fourth"]
-
-# def avg_similarity(word, word_list):
-#     sims = []
-#     for w in word_list:
-#         if word in model and w in model:
-#             sims.append(model.similarity(word, w))
-#     if sims:
-#         return np.mean(sims)
-#     else:
-#         return 0
-
-# df["sim_anagram"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), ANAGRAM_WORDS))
-# df["sim_reversal"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), REVERSAL_WORDS))   # REMOVED
-# df["sim_hidden"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), HIDDEN_WORDS))
-# df["sim_selector"] = df["indicator"].apply(lambda x: avg_similarity(str(x).lower(), SELECTOR_WORDS))
-
-
-# fodder length feature
 df["fodder_length"] = (
-    df["fodder"]
-    .astype(str)
+    df["fodder"].astype(str)
     .str.replace(r"[^A-Za-z]", "", regex=True)
     .str.len()
 )
 
-# Number of words in fodder
 df["fodder_word_count"] = df["fodder"].astype(str).str.split().apply(len)
 
-# feature matrix
 X = df[[
     "length",
     "fodder_length",
     "fodder_word_count"
-    # "sim_anagram",     # if word2vec comes back
-    # "sim_hidden",
-    # "sim_selector"
 ]].values.astype(float)
 
-
 y_raw = df["category"].values
-
 label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y_raw)
 
-# train test split
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.4,
-    stratify=y,
-    random_state=42
+    X, y, test_size=0.4, stratify=y, random_state=42
 )
 
-# scaling
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-
-# train multinomial regression
 logreg = LogisticRegression(
     multi_class="multinomial",
     solver="lbfgs",
@@ -85,46 +44,44 @@ logreg = LogisticRegression(
 )
 logreg.fit(X_train_scaled, y_train)
 
-
-# evaluate!
-y_pred = logreg.predict(X_test_scaled)
-
 print("\n=== Classification Report ===")
+y_pred = logreg.predict(X_test_scaled)
 print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
-
 print("\n=== Confusion Matrix ===")
 print(confusion_matrix(y_test, y_pred))
 
 
 def extract_features(clue, indicator, length, fodder, definition):
-    fodder_clean_len = len("".join([c for c in str(fodder) if c.isalpha()]))
-
-    features = [
-        float(length),
-        float(fodder_clean_len),
-        len(str(fodder).split()),
-    ]
-
-    return np.array(features).reshape(1, -1)
-
-# final predictor
+    fod_clean_len = len("".join([c for c in str(fodder) if c.isalpha()]))
+    return np.array([[float(length), float(fod_clean_len), len(str(fodder).split())]])
 
 
 def predict_category(clue, indicator, length, fodder, definition):
     x = extract_features(clue, indicator, length, fodder, definition)
     x_scaled = scaler.transform(x)
-
     pred_id = logreg.predict(x_scaled)[0]
     pred_label = label_encoder.inverse_transform([pred_id])[0]
     pred_probs = logreg.predict_proba(x_scaled)[0]
-
     return pred_label, pred_probs
 
-# interactive part to predict new clues
+
+def solve_anagram(fodder, length):
+    all_words = anagrams_of(fodder)
+    real = anagram_filter(all_words)
+    return {w for w in real if len(w) == length}
 
 
-print("\n=== Test a New Unseen Clue ===")
+def solve_hidden(fodder, length):
+    grams = ngrams_of(length, fodder)
+    return hidden_filter(grams)
 
+
+def solve_selector(fodder, length):
+    cands = generate_all_selectors(fodder, length)
+    return selector_filter(cands)
+
+
+print("\n=== Solve a New Clue ===")
 clue = input("Enter the clue: ")
 indicator = input("Enter the indicator: ")
 fodder = input("Enter the fodder words: ")
@@ -132,16 +89,29 @@ definition = input("Enter the definition: ")
 
 while True:
     try:
-        length = int(input("Enter the solution length: "))
+        length = int(input("Enter solution length: "))
         break
     except:
-        print("Length must be an integer, try again.")
+        print("Length must be an integer.")
 
 pred_label, pred_probs = predict_category(
-    clue, indicator, length, fodder, definition)
+    clue, indicator, length, fodder, definition
+)
 
-print("\n=== Prediction Result ===")
+print("\n=== Category Prediction ===")
 print("Predicted Category:", pred_label)
 print("\nProbabilities:")
 for cat, p in zip(label_encoder.classes_, pred_probs):
     print(f"  {cat}: {p:.4f}")
+
+print("\n=== Solutions ===")
+if pred_label == "Anagrams":
+    sol = solve_anagram(fodder, length)
+elif pred_label == "Hiddens":
+    sol = solve_hidden(fodder, length)
+elif pred_label == "Selectors":
+    sol = solve_selector(fodder, length)
+else:
+    sol = set()
+
+print(sol if sol else "No English word candidates found.")

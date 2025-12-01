@@ -1,8 +1,6 @@
-from nltk.corpus import words
-import nltk
-nltk.download('words')
+from wordfreq import top_n_list
 
-english_words = set(w.lower() for w in words.words())
+english_words = set(top_n_list("en", 100000))
 
 
 def generate_permutations(word):

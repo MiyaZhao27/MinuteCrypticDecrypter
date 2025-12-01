@@ -1,8 +1,6 @@
-from nltk.corpus import words
-import nltk
-nltk.download('words')
+from wordfreq import top_n_list
 
-english_words = set(w.lower() for w in words.words())
+english_words = set(top_n_list("en", 100000))
 
 
 def letters_from_words(words):
@@ -72,26 +70,27 @@ def string_substrings(s):
 
 
 def cross_half_combinations(words):
-    """Combine first/second halves across all words."""
+    """Combine first/second halves across all words correctly."""
     halves = []
-    fh = [first_half(w) for w in words if len(w) >= 2]
-    sh = [second_half(w) for w in words if len(w) >= 2]
 
-    for a in range(len(words)):
-        for b in range(len(words)):
-            A_fh = first_half(words[a])
-            A_sh = second_half(words[a])
-            B_fh = first_half(words[b])
-            B_sh = second_half(words[b])
+    halves_list = []
+    for w in words:
+        if len(w) >= 2:
+            halves_list.append((first_half(w), second_half(w)))
+
+    # combine every half-A with every half-B
+    for (A_fh, A_sh) in halves_list:
+        for (B_fh, B_sh) in halves_list:
 
             halves.extend([
                 A_fh + B_fh,
                 A_fh + B_sh,
                 A_sh + B_fh,
-                A_sh + B_sh
+                A_sh + B_sh,
             ])
 
     return halves
+
 
 # combine them all!
 

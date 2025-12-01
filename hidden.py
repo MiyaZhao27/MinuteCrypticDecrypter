@@ -1,9 +1,7 @@
 import re
-from nltk.corpus import words
-import nltk
-nltk.download('words')
+from wordfreq import top_n_list
 
-english_words = set(w.lower() for w in words.words())
+english_words = set(top_n_list("en", 100000))
 
 
 def clean_fodder(text):
@@ -13,7 +11,7 @@ def clean_fodder(text):
     """
     text = re.sub(r"[’'`]", "", text)
     text = re.sub(r"[-–—]", "", text)
-    text = re.sub(r"[^A-Za-z0-9 ]", "", text)
+    text = re.sub(r"[^A-Za-z ]", "", text)
     text = re.sub(r"\s+", " ", text)
     return text.lower().strip()
 
@@ -23,7 +21,7 @@ def ngrams_of(n, word):
     Return all n-grams of the fodders
     """
     word = clean_fodder(word)
-
+    word = word.replace(" ", "")  # treat as continuous string
     ngrams = set()
 
     # normal hiddens
