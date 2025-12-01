@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
@@ -9,23 +10,92 @@ from anagram import anagrams_of, filter_real_words as anagram_filter
 from hidden import ngrams_of, filter_real_words as hidden_filter
 from selector import generate_all_selectors, filter_real_words as selector_filter
 
+from word2vec import get_model
+
+
+model = get_model()
+
+
+def cosine_sim(v1, v2):
+    if v1 is None or v2 is None:
+        return 0.0
+    denom = np.linalg.norm(v1) * np.linalg.norm(v2)
+    if denom == 0:
+        return 0.0
+    return float(np.dot(v1, v2) / denom)
+
+
+def get_vec(word):
+    word = word.lower().strip()
+    if word in model.key_to_index:
+        return model[word]
+    return None
+
+
+def avg_similarity(indicator, ref_words):
+    ivec = get_vec(indicator)
+    sims = []
+    for w in ref_words:
+        sims.append(cosine_sim(ivec, get_vec(w)))
+    return float(np.mean(sims)) if sims else 0.0
+
+
+def avg_vec(text):
+    toks = text.lower().split()
+    vecs = [get_vec(t) for t in toks if get_vec(t) is not None]
+    if not vecs:
+        return None
+    return np.mean(vecs, axis=0)
+
+
+def best_definition_match(definition, candidates):
+    dvec = avg_vec(definition)
+    if dvec is None:
+        return None, {c: 0.0 for c in candidates}
+
+    scores = {}
+    for c in candidates:
+        wvec = get_vec(c)
+        scores[c] = cosine_sim(dvec, wvec)
+
+    best = max(scores, key=scores.get)
+    return best, scores
+
+
+ANAGRAM_WORDS = ["mix", "destroy", "strange", "tampering", "exploded", "shake"]
+HIDDEN_WORDS = ["conceals", "hides", "within", "held", "absorbed", "taken"]
+SELECTOR_WORDS = ["odd", "even", "head", "tail", "borders", "alternate"]
+
+
 df = pd.read_csv("logistic_data.csv")
 
 df["fodder_length"] = (
-    df["fodder"].astype(str)
+    df["fodder"]
+    .astype(str)
     .str.replace(r"[^A-Za-z]", "", regex=True)
     .str.len()
 )
 
 df["fodder_word_count"] = df["fodder"].astype(str).str.split().apply(len)
 
+df["w2v_anagram"] = df["indicator"].apply(
+    lambda x: avg_similarity(str(x), ANAGRAM_WORDS))
+df["w2v_hidden"] = df["indicator"].apply(
+    lambda x: avg_similarity(str(x), HIDDEN_WORDS))
+df["w2v_selector"] = df["indicator"].apply(
+    lambda x: avg_similarity(str(x), SELECTOR_WORDS))
+
 X = df[[
     "length",
     "fodder_length",
-    "fodder_word_count"
+    "fodder_word_count",
+    "w2v_anagram",
+    "w2v_hidden",
+    "w2v_selector"
 ]].values.astype(float)
 
 y_raw = df["category"].values
+
 label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y_raw)
 
@@ -45,29 +115,44 @@ logreg = LogisticRegression(
 logreg.fit(X_train_scaled, y_train)
 
 print("\n=== Classification Report ===")
-y_pred = logreg.predict(X_test_scaled)
-print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
+print(classification_report(
+    y_test, logreg.predict(X_test_scaled),
+    target_names=label_encoder.classes_
+))
+
 print("\n=== Confusion Matrix ===")
-print(confusion_matrix(y_test, y_pred))
+print(confusion_matrix(y_test, logreg.predict(X_test_scaled)))
 
 
-def extract_features(clue, indicator, length, fodder, definition):
+def extract_features(indicator, length, fodder):
+
     fod_clean_len = len("".join([c for c in str(fodder) if c.isalpha()]))
-    return np.array([[float(length), float(fod_clean_len), len(str(fodder).split())]])
+    fod_word_count = len(str(fodder).split())
+
+    return np.array([[
+        float(length),
+        float(fod_clean_len),
+        fod_word_count,
+        avg_similarity(indicator, ANAGRAM_WORDS),
+        avg_similarity(indicator, HIDDEN_WORDS),
+        avg_similarity(indicator, SELECTOR_WORDS)
+    ]])
 
 
-def predict_category(clue, indicator, length, fodder, definition):
-    x = extract_features(clue, indicator, length, fodder, definition)
+def predict_category(indicator, length, fodder):
+    x = extract_features(indicator, length, fodder)
     x_scaled = scaler.transform(x)
+
     pred_id = logreg.predict(x_scaled)[0]
     pred_label = label_encoder.inverse_transform([pred_id])[0]
     pred_probs = logreg.predict_proba(x_scaled)[0]
+
     return pred_label, pred_probs
 
 
 def solve_anagram(fodder, length):
-    all_words = anagrams_of(fodder)
-    real = anagram_filter(all_words)
+    words = anagrams_of(fodder)
+    real = anagram_filter(words)
     return {w for w in real if len(w) == length}
 
 
@@ -81,37 +166,56 @@ def solve_selector(fodder, length):
     return selector_filter(cands)
 
 
-print("\n=== Solve a New Clue ===")
-clue = input("Enter the clue: ")
-indicator = input("Enter the indicator: ")
-fodder = input("Enter the fodder words: ")
-definition = input("Enter the definition: ")
+print("\n=== Solve a New Cryptic Clue ===")
+clue = input("Full clue: ")
+indicator = input("Indicator word: ")
+fodder = input("Fodder words: ")
+definition = input("Definition: ")
 
 while True:
     try:
-        length = int(input("Enter solution length: "))
+        length = int(input("Solution length: "))
         break
     except:
         print("Length must be an integer.")
 
-pred_label, pred_probs = predict_category(
-    clue, indicator, length, fodder, definition
-)
+pred_label, pred_probs = predict_category(indicator, length, fodder)
 
 print("\n=== Category Prediction ===")
 print("Predicted Category:", pred_label)
+
 print("\nProbabilities:")
 for cat, p in zip(label_encoder.classes_, pred_probs):
     print(f"  {cat}: {p:.4f}")
 
-print("\n=== Solutions ===")
-if pred_label == "Anagrams":
-    sol = solve_anagram(fodder, length)
-elif pred_label == "Hiddens":
-    sol = solve_hidden(fodder, length)
-elif pred_label == "Selectors":
-    sol = solve_selector(fodder, length)
-else:
-    sol = set()
+print("\n=== Candidate Answers ===")
 
-print(sol if sol else "No English word candidates found.")
+if pred_label == "Anagrams":
+    candidates = solve_anagram(fodder, length)
+elif pred_label == "Hiddens":
+    candidates = solve_hidden(fodder, length)
+elif pred_label == "Selectors":
+    candidates = solve_selector(fodder, length)
+else:
+    candidates = set()
+
+if not candidates:
+    print("No English words found.")
+    exit()
+
+print("Candidates:", candidates)
+
+
+if len(candidates) > 1:
+    best, scores = best_definition_match(definition, candidates)
+
+    print("\n=== Definition Meaning Match ===")
+    print(f"Best Match: {best}\n")
+
+    for w, s in sorted(scores.items(), key=lambda x: -x[1]):
+        print(f"{w:<15} {s:.4f}")
+
+    print("\nFinal Answer:", best)
+
+else:
+    print("\nFinal Answer:", list(candidates)[0])
