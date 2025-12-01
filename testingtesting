@@ -1,0 +1,6 @@
+from word2vec import get_model
+model = get_model()
+
+print(model.similarity("mix", "stir"))
+print(model.similarity("intermittent", "odd"))
+print(model.most_similar("reverse"))
