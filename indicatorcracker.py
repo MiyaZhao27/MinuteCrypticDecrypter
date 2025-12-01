@@ -65,6 +65,26 @@ df["w2v_hidden"] = df["indicator"].apply(
 df["w2v_selector"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), SELECTOR_WORDS))
 
+# Indicator position relative to fodder
+def indicator_position(row):
+    clue = str(row["clue"]).lower()
+    indicator = str(row["indicator"]).lower()
+    fodder = str(row["fodder"]).lower()
+
+    idx_indicator = clue.find(indicator)
+    idx_fodder = clue.find(fodder)
+
+    if idx_indicator == -1 or idx_fodder == -1:
+        return 0
+
+    if idx_indicator < idx_fodder:
+        return -1
+    elif idx_indicator > idx_fodder:
+        return 1
+    else:
+        return 0
+
+df["indicator_position"] = df.apply(indicator_position, axis=1)
 
 # feature matrix
 X = df[[
@@ -73,7 +93,8 @@ X = df[[
     "fodder_word_count",
     "w2v_anagram",
     "w2v_hidden",
-    "w2v_selector"
+    "w2v_selector",
+    "indicator_position"
 ]].values.astype(float)
 
 
