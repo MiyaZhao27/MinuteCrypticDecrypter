@@ -1,5 +1,5 @@
 from hidden import ngrams_of, filter_real_words as filter_hidden_words
-from anagram import anagrams_of, filter_real_words as filter_anagram_words
+from anagram import do_anagram
 from selector import generate_all_selectors, filter_real_words as filter_selector_words
 
 import numpy as np
@@ -43,9 +43,8 @@ def best_definition_match(definition, candidates):
 
 
 def run_anagram_algorithm(fodder, length):
-    words = anagrams_of(fodder)
-    real = filter_anagram_words(words)
-    return {w for w in real if len(w) == length}
+    words = do_anagram(fodder)
+    return {w for w in words if len(w) == length}
 
 
 def run_hidden_algorithm(fodder, length):

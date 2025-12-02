@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
 
-from anagram import anagrams_of, filter_real_words as anagram_filter
+from anagram import do_anagram
 from hidden import ngrams_of, filter_real_words as hidden_filter
 from selector import generate_all_selectors, filter_real_words as selector_filter
 
@@ -151,9 +151,8 @@ def predict_category(indicator, length, fodder):
 
 
 def solve_anagram(fodder, length):
-    words = anagrams_of(fodder)
-    real = anagram_filter(words)
-    return {w for w in real if len(w) == length}
+    words = do_anagram(fodder)
+    return {w for w in words if len(w) == length}
 
 
 def solve_hidden(fodder, length):
