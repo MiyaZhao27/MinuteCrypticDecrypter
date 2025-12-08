@@ -1,5 +1,5 @@
 import numpy as np
-from word2vec import get_model
+from glove import get_model
 
 model = get_model()
 
@@ -50,7 +50,7 @@ def best_definition_match(definition, candidates):
 
 
 def interactive_definition_matcher():
-    print("\n=== Word2Vec Definition Matcher ===\n")
+    print("\n=== Word Embedding Definition Matcher ===\n")
 
     while True:
         definition = input("Enter the DEFINITION (or 'quit'): ").strip()
