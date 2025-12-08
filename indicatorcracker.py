@@ -8,7 +8,9 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
 
-# import data
+
+# Load Data
+
 df = pd.read_csv("logistic_data.csv")
 
 
@@ -33,9 +35,20 @@ def get_vec(word):
     return None
 
 
-ANAGRAM_WORDS = ["mix", "destroy", "strange", "tampering", "exploded", "shake"]
-HIDDEN_WORDS = ["conceals", "hides", "within", "held", "absorbed", "taken"]
-SELECTOR_WORDS = ["odd", "even", "head", "tail", "borders", "alternate"]
+ANAGRAM_WORDS = [
+    "mix", "throwing", "destroy", "strange",
+    "dancing", "sort", "tampering", "exploded"
+]
+
+HIDDEN_WORDS = [
+    "hides", "displays", "reveals", "within", "held",
+    "capturing", "absorbed", "sample", "selection", "bit", "taken"
+]
+
+SELECTOR_WORDS = [
+    "head", "tail", "heart", "borders", "coat",
+    "contents", "guts", "odd", "even", "alternate", "regularly"
+]
 
 
 def avg_similarity(indicator, word_list):
@@ -46,7 +59,8 @@ def avg_similarity(indicator, word_list):
     return float(np.mean(sims)) if sims else 0.0
 
 
-# fodder length feature
+# Feature Engineering
+
 df["fodder_length"] = (
     df["fodder"]
     .astype(str)
@@ -57,12 +71,12 @@ df["fodder_length"] = (
 # Number of words in fodder
 df["fodder_word_count"] = df["fodder"].astype(str).str.split().apply(len)
 
-# glove features
-df["glove_anagram"] = df["indicator"].apply(
+# word2vec features
+df["w2v_anagram"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), ANAGRAM_WORDS))
-df["glove_hidden"] = df["indicator"].apply(
+df["w2v_hidden"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), HIDDEN_WORDS))
-df["glove_selector"] = df["indicator"].apply(
+df["w2v_selector"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), SELECTOR_WORDS))
 
 
@@ -71,18 +85,19 @@ X = df[[
     "length",
     "fodder_length",
     "fodder_word_count",
-    "glove_anagram",
-    "glove_hidden",
-    "glove_selector"
+    "w2v_anagram",
+    "w2v_hidden",
+    "w2v_selector"
 ]].values.astype(float)
-
 
 y_raw = df["category"].values
 
 label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y_raw)
 
-# train test split
+
+# Train/Test Split
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
     test_size=0.4,
@@ -90,22 +105,25 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# scaling
+# Scaling
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 
-# train multinomial regression
+# Train Logistic Regression
+
 logreg = LogisticRegression(
     multi_class="multinomial",
     solver="lbfgs",
     max_iter=500
 )
+
 logreg.fit(X_train_scaled, y_train)
 
 
-# evaluate!
+# Evaluation
+
 y_pred = logreg.predict(X_test_scaled)
 
 print("\n=== Classification Report ===")
@@ -113,6 +131,8 @@ print(classification_report(y_test, y_pred, target_names=label_encoder.classes_)
 
 print("\n=== Confusion Matrix ===")
 print(confusion_matrix(y_test, y_pred))
+
+# Feature Extraction for New Inputs
 
 
 def extract_features(clue, indicator, length, fodder, definition):
@@ -128,8 +148,8 @@ def extract_features(clue, indicator, length, fodder, definition):
         avg_similarity(indicator, SELECTOR_WORDS)
     ]])
 
-# final predictor
 
+# Prediction Function
 
 def predict_category(clue, indicator, length, fodder, definition):
     x = extract_features(clue, indicator, length, fodder, definition)
@@ -141,8 +161,8 @@ def predict_category(clue, indicator, length, fodder, definition):
 
     return pred_label, pred_probs
 
-# interactive part to predict new clues
 
+# Interactive Mode
 
 print("\n=== Test a New Unseen Clue ===")
 
@@ -159,10 +179,12 @@ while True:
         print("Length must be an integer, try again.")
 
 pred_label, pred_probs = predict_category(
-    clue, indicator, length, fodder, definition)
+    clue, indicator, length, fodder, definition
+)
 
 print("\n=== Prediction Result ===")
 print("Predicted Category:", pred_label)
+
 print("\nProbabilities:")
 for cat, p in zip(label_encoder.classes_, pred_probs):
     print(f"  {cat}: {p:.4f}")
