@@ -1,4 +1,4 @@
-from word2vec import get_model
+from glove import get_model
 import sys
 import numpy as np
 import pandas as pd
@@ -13,7 +13,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 df = pd.read_csv("logistic_data.csv")
 
-# Word2Vec Setup
+
+# GLOVE STUFF
 
 model = get_model()
 
@@ -70,50 +71,23 @@ df["fodder_length"] = (
 # Number of words in fodder
 df["fodder_word_count"] = df["fodder"].astype(str).str.split().apply(len)
 
-# Word2Vec similarity features
-df["w2v_anagram"] = df["indicator"].apply(
-    lambda x: avg_similarity(str(x), ANAGRAM_WORDS)
-)
+# glove features
+df["glove_anagram"] = df["indicator"].apply(
+    lambda x: avg_similarity(str(x), ANAGRAM_WORDS))
+df["glove_hidden"] = df["indicator"].apply(
+    lambda x: avg_similarity(str(x), HIDDEN_WORDS))
+df["glove_selector"] = df["indicator"].apply(
+    lambda x: avg_similarity(str(x), SELECTOR_WORDS))
 
-df["w2v_hidden"] = df["indicator"].apply(
-    lambda x: avg_similarity(str(x), HIDDEN_WORDS)
-)
 
-df["w2v_selector"] = df["indicator"].apply(
-    lambda x: avg_similarity(str(x), SELECTOR_WORDS)
-)
-
-# Indicator position relative to fodder
-def indicator_position(row):
-    clue = str(row["clue"]).lower()
-    indicator = str(row["indicator"]).lower()
-    fodder = str(row["fodder"]).lower()
-
-    idx_indicator = clue.find(indicator)
-    idx_fodder = clue.find(fodder)
-
-    if idx_indicator == -1 or idx_fodder == -1:
-        return 0
-
-    if idx_indicator < idx_fodder:
-        return -1
-    elif idx_indicator > idx_fodder:
-        return 1
-    else:
-        return 0
-
-df["indicator_position"] = df.apply(indicator_position, axis=1)
-
-# Feature Matrix
-
+# feature matrix
 X = df[[
     "length",
     "fodder_length",
     "fodder_word_count",
-    "w2v_anagram",
-    "w2v_hidden",
-    "w2v_selector",
-    "indicator_position"
+    "glove_anagram",
+    "glove_hidden",
+    "glove_selector"
 ]].values.astype(float)
 
 y_raw = df["category"].values
@@ -126,7 +100,7 @@ y = label_encoder.fit_transform(y_raw)
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
-    test_size=0.4,
+    test_size=0.3,
     stratify=y,
     random_state=42
 )

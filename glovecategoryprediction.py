@@ -1,5 +1,5 @@
 import numpy as np
-from word2vec import get_model
+from glove import get_model
 
 model = get_model()
 
@@ -41,7 +41,7 @@ CATEGORY_MAP = {
 # Score computation
 
 
-def w2v_category_scores(indicator):
+def glove_category_scores(indicator):
     indicator = indicator.lower().strip()
     ivec = get_vec(indicator)
 
@@ -52,16 +52,16 @@ def w2v_category_scores(indicator):
     return scores
 
 
-def w2v_best_category(indicator):
-    scores = w2v_category_scores(indicator)
+def glove_best_category(indicator):
+    scores = glove_category_scores(indicator)
     best = max(scores, key=scores.get)
     return best, scores
 
 # Interactive
 
 
-def interactive_w2v():
-    print("\n=== Word2Vec Category Predictor ===\n")
+def interactive_glove():
+    print("\n=== Word Embedding Category Predictor ===\n")
 
     while True:
         word = input("Enter an INDICATOR word (or 'quit'): ").strip()
@@ -69,7 +69,7 @@ def interactive_w2v():
             print("Goodbye!")
             break
 
-        best, scores = w2v_best_category(word)
+        best, scores = glove_best_category(word)
 
         print(f"\nIndicator: {word}")
         print(f"Predicted Category: **{best.upper()}**\n")
@@ -82,4 +82,4 @@ def interactive_w2v():
 
 
 if __name__ == "__main__":
-    interactive_w2v()
+    interactive_glove()

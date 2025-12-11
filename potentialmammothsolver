@@ -10,7 +10,7 @@ from anagram import do_anagram
 from hidden import ngrams_of, filter_real_words as hidden_filter
 from selector import generate_all_selectors, filter_real_words as selector_filter
 
-from word2vec import get_model
+from glove import get_model
 
 
 model = get_model()
@@ -81,20 +81,20 @@ df["fodder_length"] = (
 
 df["fodder_word_count"] = df["fodder"].astype(str).str.split().apply(len)
 
-df["w2v_anagram"] = df["indicator"].apply(
+df["glove_anagram"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), ANAGRAM_WORDS))
-df["w2v_hidden"] = df["indicator"].apply(
+df["glove_hidden"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), HIDDEN_WORDS))
-df["w2v_selector"] = df["indicator"].apply(
+df["glove_selector"] = df["indicator"].apply(
     lambda x: avg_similarity(str(x), SELECTOR_WORDS))
 
 X = df[[
     "length",
     "fodder_length",
     "fodder_word_count",
-    "w2v_anagram",
-    "w2v_hidden",
-    "w2v_selector"
+    "glove_anagram",
+    "glove_hidden",
+    "glove_selector"
 ]].values.astype(float)
 
 y_raw = df["category"].values
