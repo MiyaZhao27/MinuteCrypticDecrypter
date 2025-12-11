@@ -1,0 +1,135 @@
+clue,category,fodder,length,definition,candidate,similarity_to_definition
+Deliver extremely popular puzzling video,anagram,video,7,Deliver,,0.0
+Even nerdy guys can be badass,selector,nerdy guys,4,can be badass,dren,-0.23997779190540314
+Even nerdy guys can be badass,selector,nerdy guys,4,can be badass,edgy,0.3024446368217468
+Even nerdy guys can be badass,selector,nerdy guys,4,can be badass,nerd,0.26824772357940674
+Even nerdy guys can be badass,selector,nerdy guys,4,can be badass,guys,0.6942517161369324
+Even nerdy guys can be badass,selector,nerdy guys,4,can be badass,gugu,-0.21882489323616028
+Even nerdy guys can be badass,selector,nerdy guys,4,can be badass,nene,-0.07441122829914093
+Changes actress!?,anagram,actress,7,changes actress,casters,-0.271567165851593
+Changes actress!?,anagram,actress,7,changes actress,castres,-0.09782113134860992
+Provide a lipstick sample for model,hidden,Provide a lipstick,5,model,provi,0.0
+Provide a lipstick sample for model,hidden,Provide a lipstick,5,model,ideal,0.6242409348487854
+Provide a lipstick sample for model,hidden,Provide a lipstick,5,model,stick,0.3178800642490387
+Provide a lipstick sample for model,selector,Provide a lipstick,5,model,provi,0.0
+Provide a lipstick sample for model,selector,Provide a lipstick,5,model,ideal,0.6242409348487854
+Provide a lipstick sample for model,selector,Provide a lipstick,5,model,stick,0.3178800642490387
+Sister's half brothers,selector,brothers,4,sister's,brot,0.0
+Sister's half brothers,selector,brothers,4,sister's,bohr,0.0
+Sister's half brothers,selector,brothers,4,sister's,hers,0.0
+Sister's half brothers,selector,brothers,4,sister's,ther,0.0
+Sister's half brothers,selector,brothers,4,sister's,roth,0.0
+Sister's half brothers,selector,brothers,4,sister's,othe,0.0
+Intermittent pain in body to irritate,selector,pain in body,5,to irritate,annoy,0.49828946590423584
+Temporary contract in government sector,hidden,contract in government,6,temporary,acting,0.3651638925075531
+Temporary contract in government sector,hidden,contract in government,6,temporary,contra,-0.03402404487133026
+Temporary contract in government sector,hidden,contract in government,6,temporary,govern,0.37851110100746155
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,memes,0.06554942578077316
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,meson,0.4195365309715271
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,messe,0.1759098917245865
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,grams,0.0026946926955133677
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,insta,0.13453635573387146
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,marga,-0.11993519216775894
+Dank memes on Instagram sent to principals,selector,memes on Instagram sent to,5,Dank,moist,0.35458970069885254
+Cinema illegally hides message on a screen,hidden,Cinema illegally,5,message on a screen,email,0.41577139496803284
+Cinema illegally hides message on a screen,hidden,Cinema illegally,5,message on a screen,gally,-0.4046705961227417
+Cinema illegally hides message on a screen,hidden,Cinema illegally,5,message on a screen,legal,0.5908966660499573
+Go thirds in pet turkey,selector,pet turkey,3,go,yup,0.05807475745677948
+Go thirds in pet turkey,selector,pet turkey,3,go,pte,-0.21772357821464539
+Go thirds in pet turkey,selector,pet turkey,3,go,puy,-0.22227239608764648
+Go thirds in pet turkey,selector,pet turkey,3,go,ett,-0.07041952759027481
+Go thirds in pet turkey,selector,pet turkey,3,go,key,0.6194394826889038
+Go thirds in pet turkey,selector,pet turkey,3,go,pet,0.4034590423107147
+Go thirds in pet turkey,selector,pet turkey,3,go,tte,-0.3328670263290405
+Go thirds in pet turkey,selector,pet turkey,3,go,etp,-0.3218010365962982
+Go thirds in pet turkey,selector,pet turkey,3,go,tur,-0.03470858931541443
+Go thirds in pet turkey,selector,pet turkey,3,go,kru,-0.2735045850276947
+Go thirds in pet turkey,selector,pet turkey,3,go,rut,0.19740068912506104
+Go thirds in pet turkey,selector,pet turkey,3,go,tep,-0.2788844704627991
+Go thirds in pet turkey,hidden,pet turkey,3,go,ett,-0.07041952759027481
+Go thirds in pet turkey,hidden,pet turkey,3,go,key,0.6194394826889038
+Go thirds in pet turkey,hidden,pet turkey,3,go,pet,0.4034590423107147
+Go thirds in pet turkey,hidden,pet turkey,3,go,tte,-0.3328670263290405
+Go thirds in pet turkey,hidden,pet turkey,3,go,tur,-0.03470858931541443
+Go thirds in pet turkey,hidden,pet turkey,3,go,kru,-0.2735045850276947
+Go thirds in pet turkey,hidden,pet turkey,3,go,rut,0.19740068912506104
+Go thirds in pet turkey,hidden,pet turkey,3,go,tep,-0.2788844704627991
+De Niro's acting decreased with Heat,anagram,De Niro,6,decreased with Heat,deniro,-0.1956559121608734
+De Niro's acting decreased with Heat,anagram,De Niro,6,decreased with Heat,indore,-0.04979270324110985
+De Niro's acting decreased with Heat,anagram,De Niro,6,decreased with Heat,ironed,0.007642651908099651
+De Niro's acting decreased with Heat,anagram,De Niro,6,decreased with Heat,dinero,-0.025871647521853447
+Minute Cryptic finally solved (not against the clock),anagram,minute,7,not against the clock,bitumen,-0.11279996484518051
+Minute Cryptic finally solved (not against the clock),anagram,minute,7,not against the clock,runtime,0.06459145247936249
+Minute Cryptic finally solved (not against the clock),anagram,minute,7,not against the clock,gentium,-0.2350071519613266
+Minute Cryptic finally solved (not against the clock),anagram,minute,7,not against the clock,minuets,-0.35842981934547424
+Minute Cryptic finally solved (not against the clock),anagram,minute,7,not against the clock,pentium,0.21203498542308807
+Minute Cryptic finally solved (not against the clock),anagram,minute,7,not against the clock,minutes,0.594068706035614
+Original amigos each only halfway through paperwork,selector,original amigos,7,paperwork,origami,0.08671122789382935
+Original amigos each only halfway through paperwork,hidden,original amigos,7,paperwork,,0.0
+Inside Stephanie's revealing skirt,hidden,inside stephanie's,8,skirt,sidestep,0.25101882219314575
+Eye doctor orders bifocals and heads back home,selector,Eye doctor orders bifocals and,5,back home,order,0.6005419492721558
+Eye doctor orders bifocals and heads back home,selector,Eye doctor orders bifocals and,5,back home,abode,0.0755261480808258
+Eye doctor orders bifocals and heads back home,selector,Eye doctor orders bifocals and,5,back home,focal,0.14583973586559296
+Stab piercing rogue's shield,hidden,rogue's shield,5,stab,hield,0.0
+Stab piercing rogue's shield,hidden,rogue's shield,5,stab,rogue,0.10054610669612885
+Stab piercing rogue's shield,hidden,rogue's shield,5,stab,guess,0.25629910826683044
+Stab piercing rogue's shield,hidden,rogue's shield,5,stab,shiel,0.0317297987639904
+Puzzle book's debut released by beaming eccentric,anagram,beaming,6,puzzle,,0.0
+Last five cappuccinos sent back in waves?,hidden,cappuccinos,5,waves,cuppa,-0.108711376786232
+Last five cappuccinos sent back in waves?,hidden,cappuccinos,5,waves,sonic,0.4797073006629944
+Last five cappuccinos sent back in waves?,hidden,cappuccinos,5,waves,pucci,-0.19583268463611603
+Love us madly? Grab 1000 books!,anagram,love us,7,books,,0.0
+Feel mature after clearing elm property,selector,feel mature,7,property,,0.0
+Perhaps backpacking close by Amsterdam?,hidden,close by Amsterdam,5,perhaps,close,0.6795523762702942
+Perhaps backpacking close by Amsterdam?,hidden,close by Amsterdam,5,perhaps,madre,-0.07049890607595444
+Perhaps backpacking close by Amsterdam?,hidden,close by Amsterdam,5,perhaps,maybe,0.8217660784721375
+Play leapfrog across street drains - a fitting game?,selector,street drains,6,a fitting game,street,0.45946425199508667
+Play leapfrog across street drains - a fitting game?,selector,street drains,6,a fitting game,tetris,0.24265363812446594
+Play leapfrog across street drains - a fitting game?,selector,street drains,6,a fitting game,drains,0.0776808112859726
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,trang,-0.1678413450717926
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,ungar,-0.3161429464817047
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,ranga,-0.15673202276229858
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,angra,-0.029307400807738304
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,grand,0.3938681185245514
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,argan,-0.09012976288795471
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,grant,0.244584858417511
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,range,0.4989902973175049
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,rango,-0.3950480818748474
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,orang,-0.300436407327652
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,prang,-0.20549841225147247
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,organ,0.4181065559387207
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,angry,0.5254939794540405
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,grana,-0.2693411111831665
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,drang,-0.09642484039068222
+Engineer rang unknown number when blowing a fuse,anagram,rang,5,when blowing a fuse,rangi,-0.20829880237579346
+Fishnets that could assist fishing vessel's process by seconds,selector,that could assist fishing vessel's process by,7,fishnets,fishing,-0.014259783551096916
+Fishnets that could assist fishing vessel's process by seconds,selector,that could assist fishing vessel's process by,7,fishnets,process,-0.199990913271904
+Murder ingredient found in microwave?,hidden,microwave,4,murder ingredient,crow,0.0335397869348526
+Murder ingredient found in microwave?,hidden,microwave,4,murder ingredient,micr,-0.05440692603588104
+Murder ingredient found in microwave?,hidden,microwave,4,murder ingredient,wave,0.2838234603404999
+Murder ingredient found in microwave?,selector,microwave,4,murder ingredient,crow,0.0335397869348526
+Murder ingredient found in microwave?,selector,microwave,4,murder ingredient,micr,-0.05440692603588104
+Murder ingredient found in microwave?,selector,microwave,4,murder ingredient,wave,0.2838234603404999
+No coming back after shipwreck? That sucks,anagram,no ship,6,that sucks,hopsin,-0.09911063313484192
+No coming back after shipwreck? That sucks,anagram,no ship,6,that sucks,siphon,0.24718520045280457
+Solitary Dancing Queen fan,anagram,solitary,8,queen fan,royalist,0.31708136200904846
+Admit spending time with really odd seaman,selector,admit time really,7,seaman,,0.0
+Secretly ditch essay for game with mates?,hidden,ditch essay,5,game with mates,essay,0.23586176335811615
+Secretly ditch essay for game with mates?,hidden,ditch essay,5,game with mates,ditch,0.23058654367923737
+Secretly ditch essay for game with mates?,hidden,ditch essay,5,game with mates,chess,0.44947484135627747
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,round,0.3735693395137787
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,radek,-0.1332797259092331
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,arrow,0.4388699531555176
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,carts,0.24590033292770386
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,kedar,-0.06417141854763031
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,titan,0.5653423070907593
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,torts,-0.1466299295425415
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,track,0.38137394189834595
+Giant tortoise is tracked around narrow openings,selector,tortoise is tracked around narrow,5,giant,trots,-0.07622797787189484
+Eye rolling feels good occasionally,selector,feels good,4,eye,dodo,0.05423353239893913
+Eye rolling feels good occasionally,selector,feels good,4,eye,gogo,-0.08437681943178177
+Eye rolling feels good occasionally,selector,feels good,4,eye,ogle,-0.2617073357105255
+Eye rolling feels good occasionally,selector,feels good,4,eye,eels,0.10287950187921524
+Eye rolling feels good occasionally,selector,feels good,4,eye,slee,0.11026975512504578
+Eye rolling feels good occasionally,selector,feels good,4,eye,good,0.588071346282959
+Eye rolling feels good occasionally,selector,feels good,4,eye,feel,0.5498745441436768

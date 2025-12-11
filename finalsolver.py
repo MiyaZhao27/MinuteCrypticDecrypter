@@ -1,6 +1,7 @@
 from hidden import ngrams_of, filter_real_words as filter_hidden_words
 from anagram import do_anagram
 from selector import generate_all_selectors, filter_real_words as filter_selector_words
+import pandas as pd
 
 import numpy as np
 from glove import get_model
@@ -107,4 +108,68 @@ def solve_clue():
 
 
 if __name__ == "__main__":
+    # --- interactive mode (unchanged) ---
     solve_clue()
+
+    # --- batch mode: run over testsolver.csv and save candidates + similarities ---
+    print("\n=== Running batch solver on testsolver.csv ===")
+
+    ts_path = "testsolver.csv"
+    out_ts_path = "testsolver_results.csv"
+
+    try:
+        ts_df = pd.read_csv(ts_path)
+    except FileNotFoundError:
+        print(f"Could not find {ts_path}. Skipping batch solve.\n")
+    else:
+        rows = []
+
+        # Expecting: Clue,Category,Fodder,Length,definition
+        for idx, row in ts_df.iterrows():
+            clue = row["Clue"]
+            category = row["Category"]
+            fodder = row["Fodder"]
+            length = int(row["Length"])
+            definition = row["Definition"]
+
+            # choose algorithm
+            cat = category.lower()
+            if "anagram" in cat:
+                candidates = run_anagram_algorithm(fodder, length)
+            elif "hidden" in cat:
+                candidates = run_hidden_algorithm(fodder, length)
+            elif "selector" in cat:
+                candidates = run_selector_algorithm(fodder, length)
+            else:
+                candidates = set()
+
+            if not candidates:
+                # still record something if no candidates found
+                rows.append({
+                    "clue": clue,
+                    "category": category,
+                    "fodder": fodder,
+                    "length": length,
+                    "definition": definition,
+                    "candidate": "",
+                    "similarity_to_definition": 0.0
+                })
+                continue
+
+            # score each candidate against the definition
+            _, scores = best_definition_match(definition, candidates)
+
+            for cand in candidates:
+                rows.append({
+                    "clue": clue,
+                    "category": category,
+                    "fodder": fodder,
+                    "length": length,
+                    "definition": definition,
+                    "candidate": cand,
+                    "similarity_to_definition": scores.get(cand, 0.0)
+                })
+
+        out_df = pd.DataFrame(rows)
+        out_df.to_csv(out_ts_path, index=False)
+        print(f"Saved batch results to {out_ts_path}")

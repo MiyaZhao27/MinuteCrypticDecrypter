@@ -6,3 +6,5 @@ def get_model():
     model = api.load("glove-wiki-gigaword-50")
     print("Done!")
     return model
+
+# https://huggingface.co/fse/glove-wiki-gigaword-50
