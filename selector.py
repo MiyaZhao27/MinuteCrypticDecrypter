@@ -1,7 +1,7 @@
 from wordfreq import top_n_list
 
+# Load a dictionary of 100k most frequent English Words
 english_words = set(top_n_list("en", 100000))
-
 
 def letters_from_words(words):
     """Flatten list of words into a list of characters."""
@@ -12,46 +12,55 @@ def letters_from_words(words):
 
 # basic word wise selectors like first letters, last letters, etc
 
-
 def first_letters(words):
+    """Takes the first character of every word"""
     return "".join(w[0] for w in words if len(w) > 0)
 
 
 def last_letters(words):
+    """Takes the last character of every word"""
     return "".join(w[-1] for w in words if len(w) > 0)
 
 
 def middle_letters(words):
+    """Joins the characters at the center index of every word"""
     return "".join(w[len(w)//2] for w in words if len(w) >= 3)
 
 # nth letter selectors
 
 
 def nth_letters(chars, n):
+    """Returns a string composed of every nth character (starting at index 0)"""
     return "".join(chars[0::n])
 
 
 def odd_letters(chars):
+    """Returns a string composed of every odd character"""
     return "".join(chars[0::2])
 
 
 def even_letters(chars):
+    """Returns a string composed of every even character"""
     return "".join(chars[1::2])
 
 # half words
 
 
 def first_half(w):
+    """Returns the first half of a word"""
     return w[: len(w)//2]
 
 
 def second_half(w):
+    """Returns the second half of a word"""
+    
     return w[len(w)//2:]
 
+
 # substrings
-
-
 def word_substrings(w):
+    """Generates all possible substrings for a single word."""
+    
     subs = []
     for i in range(len(w)):
         for j in range(i+1, len(w)+1):
@@ -60,13 +69,15 @@ def word_substrings(w):
 
 
 def string_substrings(s):
+    """Generates all possible substrings for a single string."""
+    
     subs = []
     for i in range(len(s)):
         for j in range(i+1, len(s)+1):
             subs.append(s[i:j])
     return subs
 
-# sometimes you have to take the halves of two words and frakenstein them
+# sometimes you have to take the halves of two words and mash them together
 
 
 def cross_half_combinations(words):
