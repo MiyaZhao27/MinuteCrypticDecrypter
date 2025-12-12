@@ -17,7 +17,6 @@ def clean_fodder(text):
 
 # Then I returned all the n-grams of the fodders
 
-
 def ngrams_of(n, word):
     word = clean_fodder(word)
     word = word.replace(" ", "")  # treat as continuous string
@@ -37,7 +36,6 @@ def ngrams_of(n, word):
 
 # since not all ngrams would make sense as words we filtered them through
 # the 100K most frequent words in english.
-
 
 def filter_real_words(ngrams):
     real_words = set()
