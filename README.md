@@ -64,7 +64,7 @@ Usage:
 indicatorcracker.py:
 ## is user input
 
------ What Category is the Minute Cryptic Indicator? -----
+----- What Category is the Minute Cryptic Indicator? -----  <br>
 Enter the clue: ## Provide a lipstick sample for model
 Enter the indicator:  ## sample
 Enter the fodder words: ## Provide a lipstick
