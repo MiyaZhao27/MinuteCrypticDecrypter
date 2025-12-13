@@ -63,14 +63,14 @@ Additionally, these files were helpful for understanding how close the classific
 
 **indicatorcracker.py:**
 
-\## notates user input
+*itallics notates user input*
 
 ----- What Category is the Minute Cryptic Indicator? -----  <br>
-Enter the clue: ## Provide a lipstick sample for model  <br>
-Enter the indicator:  ## sample  <br>
-Enter the fodder words: ## Provide a lipstick  <br>
-Enter the definition: ## model  <br>
-Enter the solution length: ## 5  <br>
+Enter the clue: *Provide a lipstick sample for model*  <br>
+Enter the indicator:  *sample*  <br>
+Enter the fodder words: *Provide a lipstick*  <br>
+Enter the definition: *model*  <br>
+Enter the solution length: *5*  <br>
 
 ----- Prediction Result -----  <br>
 Predicted Category: Selectors  <br>
@@ -82,12 +82,12 @@ Probabilities:  <br>
 
 **finalsolver.py:**
 
-Enter the fodder: ## Provide a lipstick  <br>
-Enter the answer length: ## 5  <br>
-Enter category (anagram / hidden / selector): ## hidden  <br>
+Enter the fodder: *Provide a lipstick*  <br>
+Enter the answer length: *5*  <br>
+Enter category (anagram / hidden / selector): *hidden*  <br>
 
 Multiple candidate words: {'stick', 'ideal', 'provi'}  <br>
-Enter the DEFINITION part of the clue: model  <br>
+Enter the DEFINITION part of the clue: *model*  <br>
 
 --- GloVe Scoring ---  <br>
 Definition: model  <br>
