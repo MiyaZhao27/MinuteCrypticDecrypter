@@ -2,7 +2,7 @@
 **Language and Computation Final Project** <br>
 *Amanda Huang, Gbemiga Salu, Miya Zhao* <br>
 
-**Summary:** This project utilizes python, GloVe, and various libraries to classify different types of Minute Cryptic Puzzles, and solve them based on their clues. It utilizes computational and lingustic concepts like n-grams, semantic embeddings, Multinomial Logistic Regression to generate and filter solutions to the [Minute Cryptic](https://www.minutecryptic.com/).
+**Summary:** This project utilizes python, [GloVe](https://huggingface.co/fse/glove-wiki-gigaword-50), and various libraries to classify different types of Minute Cryptic Puzzles, and solve them based on their clues. It utilizes computational and lingustic concepts like n-grams, semantic embeddings, Multinomial Logistic Regression to generate and filter solutions to the [Minute Cryptic](https://www.minutecryptic.com/).
 
 This model is intended to be used to classify and generate solutions for Anagram, Hidden, and Selector type puzzles.
 
