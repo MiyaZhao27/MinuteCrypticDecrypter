@@ -43,7 +43,7 @@ Reads input from user (clues and length of answer). When given a specific puzzle
 Loads a pre-trained GloVe vector (trained on 2B tweets)/ Used for calculating semantic similarity
  
 **logistic_data.csv & testsolver.csv**
-Contains data harvested from Minute Cryptic's YouTube Channel, used for Indicatorcracker.py training
+Contains data harvested from [Minute Cryptic's YouTube Channel](https://www.youtube.com/@MinuteCryptic), used for Indicatorcracker.py training
 
 We utilized cross-validation to make up for data sparsity.
 
